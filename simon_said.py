@@ -45,7 +45,7 @@ class SensoElement:
 
     def play(self, display, duration: float = None):
         display.set_pen(self.r, self.g, self.b)
-        display.circle(self.x, self.y, self.rad)  # type: ignore
+        display.circle(self.x, self.y, self.rad)  
         display.update()
         display.set_tone(self.freq)
         if duration is not None:
@@ -53,15 +53,15 @@ class SensoElement:
         else:
             utime.sleep(self.duration)
         display.set_pen(self.br, self.bg, self.bb)
-        display.circle(self.x,self.y, self.rad - 2) # type: ignore
+        display.circle(self.x,self.y, self.rad - 2) 
         display.set_tone(-1)
         display.update()
 
     def init_display(self, display):
         display.set_pen(self.r, self.g, self.b)
-        display.circle(self.x, self.y, self.rad) # type: ignore
+        display.circle(self.x, self.y, self.rad) 
         display.set_pen(self.br, self.bg, self.bb)
-        display.circle(self.x,self.y, self.rad - 2) # type: ignore
+        display.circle(self.x,self.y, self.rad - 2) 
         display.update()
 
 
@@ -77,7 +77,33 @@ def showRound(round: int):
     display.text("Round: "+str(round), 35,120, 200,3)
     display.update()
 
-#some definitions
+def init_game() -> None:
+    pass
+
+def computer_turn():
+    pass
+
+def player_turn():
+    pass
+
+def loose():
+    pass
+
+
+def start_screen() -> None:
+    display.set_pen(0,255,0)
+    display.clear()
+    display.set_pen(0,0,0)
+    display.text("Get Ready to play", 5,20, 200,5)
+    display.text("Press Button 'Y' to start", 5,140,200,4)
+    display.update()
+    while not display.is_pressed(display.BUTTON_Y):
+        utime.sleep(.1)
+
+
+#
+# Initialization
+#
 btn_a = (60,70)
 btn_b = (60,190)
 btn_x = (180,70)
@@ -90,33 +116,18 @@ freq_a = 220
 freq_b = 440
 freq_x = 880
 freq_y = 1760
-
 duration_break = 1
 duration_play = 0.5
 duration_factor = 0.9
-
-#
-# Initialization
-#
-
-
 buf = bytearray(display.get_width() * display.get_height() * 2)
 display.init(buf)
 sensoX = SensoElement(btn_x,20,col_x, freq=freq_x, duration=0.5)
 sensoY = SensoElement(btn_y,20,col_y, freq=freq_y, duration=0.5)
 sensoA = SensoElement(btn_a,20,col_a, freq=freq_a, duration=0.5)
 sensoB = SensoElement(btn_b,20,col_b, freq=freq_b, duration=0.5)
-
 sensoElements = [sensoA, sensoB, sensoX, sensoY]
 
-display.set_pen(0,255,0)
-display.clear()
-display.set_pen(0,0,0)
-display.text("Get Ready to play", 5,20, 200,5)
-display.text("Press Button 'Y' to start", 5,140,200,4)
-display.update()
-while not display.is_pressed(display.BUTTON_Y):
-    utime.sleep(.1)
+start_screen()
 
 while True:
     playlist = []
@@ -141,7 +152,7 @@ while True:
 
         showRound(round)
         playlist.append(sensoElements[random.randint(0,3)])
-        sensoElements[0].calc_duration(0.95)
+        sensoElements[0].calc_duration(0.90)
         print(f"Duration: {sensoElements[0].duration}")
 
         # show the play sequence
@@ -215,5 +226,3 @@ while True:
         utime.sleep(.1)
     display.set_pen(0,0,0)
     display.clear()
-    
-
