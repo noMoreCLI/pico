@@ -12,7 +12,7 @@ class SensoElement:
     #freq = 1200           <--- these should be instance variables 
     duration = 0.5
 
-    def __init__(self, point, radius, colorRBG, freq=1200, duration=0.5):
+    def __init__(self, point: tuple[int, int], radius: int, colorRBG: tuple[int, int, int], freq: int = 1200, duration: float = 0.5):
         self.set_location(point)
         self.set_radius(radius)
         self.set_color(colorRBG)
@@ -43,9 +43,9 @@ class SensoElement:
     def calc_duration(cls, factor: float):
         cls.duration = cls.duration * factor
 
-    def play(self, display, duration=None):
+    def play(self, display, duration: float = None):
         display.set_pen(self.r, self.g, self.b)
-        display.circle(self.x, self.y, self.rad)
+        display.circle(self.x, self.y, self.rad)  # type: ignore
         display.update()
         display.set_tone(self.freq)
         if duration is not None:
@@ -53,24 +53,24 @@ class SensoElement:
         else:
             utime.sleep(self.duration)
         display.set_pen(self.br, self.bg, self.bb)
-        display.circle(self.x,self.y, self.rad - 2)
+        display.circle(self.x,self.y, self.rad - 2) # type: ignore
         display.set_tone(-1)
         display.update()
 
     def init_display(self, display):
         display.set_pen(self.r, self.g, self.b)
-        display.circle(self.x, self.y, self.rad)
+        display.circle(self.x, self.y, self.rad) # type: ignore
         display.set_pen(self.br, self.bg, self.bb)
-        display.circle(self.x,self.y, self.rad - 2)
+        display.circle(self.x,self.y, self.rad - 2) # type: ignore
         display.update()
 
 
-def play_tone(freq,duration=0.4):
+def play_tone(freq: int,duration: float = 0.4):
     display.set_tone(freq)
     utime.sleep(duration)
     display.set_tone(-1)
 
-def showRound(round):
+def showRound(round: int):
     display.set_pen(0,255,0)
     display.rectangle(0,115,240,30)
     display.set_pen(0,0,0)
@@ -135,6 +135,7 @@ while True:
         e.init_display(display)
 
     inplay = True
+    sensoElements[0].set_duration(0.5)
 
     while inplay:
 
@@ -149,7 +150,7 @@ while True:
         for e in playlist:
             e.play(display)
             #e.calc_duration(duration_factor)
-            utime.sleep(0.5)
+            utime.sleep(sensoElements[0].duration)
         print(f"Round: {round} done")
         
         # players turn
