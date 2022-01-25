@@ -1,3 +1,4 @@
+from _typeshed import SupportsItemAccess
 import picoexplorer as display # type: ignore
 import utime # type: ignore
 import random
@@ -83,11 +84,64 @@ def init_game() -> None:
 def computer_turn():
     pass
 
-def player_turn():
-    pass
+def player_turn(playlist, round: int):
+    success = True
+    turn = 0
+    play = True
+    # Lets wait for key presses and check, if it was the right key
+    # if not, the game ends
+    while play:
+        if display.is_pressed(display.BUTTON_A):
+            print("Button A")
+            if playlist[turn] == sensoA:
+                sensoA.play(display, 0.5)
+                turn = turn + 1
+            else:
+                print("Lost")
+                success = False
+                play = False
+        if display.is_pressed(display.BUTTON_B):
+            print("Button B")
+            if playlist[turn] == sensoB:
+                sensoB.play(display, 0.5)
+                turn = turn + 1
+            else:
+                print("Lost")
+                success = False
+                play = False
+        if display.is_pressed(display.BUTTON_X):
+            print("Button X")
+            if playlist[turn] == sensoX:
+                sensoX.play(display, 0.5)
+                turn = turn + 1
+            else:
+                print("Lost")
+                success = False
+                play = False
+        if display.is_pressed(display.BUTTON_Y):
+            print("Button Y")
+            if playlist[turn] == sensoY:
+                sensoY.play(display, 0.5)
+                turn = turn + 1
+            else:
+                print("Lost")
+                success = False
+                play = False
+        utime.sleep(.05)
+        # check if we we have pressed all keys in this round
+        if turn == round:
+            play = False
+            round = round + 1
+            print("Starting next round")
+    return success
 
-def loose():
-    pass
+def loose(duration: int = 3):
+    display.set_pen(255,0,0)
+    display.clear()
+    display.set_pen(0,0,0)
+    display.text("LOST", 5,20, 200,5)
+    display.update()
+    utime.sleep(duration)
 
 
 def start_screen() -> None:
@@ -156,7 +210,7 @@ while True:
         print(f"Duration: {sensoElements[0].duration}")
 
         # show the play sequence
-        utime.sleep(0.7)
+        #utime.sleep(0.7)
         
         for e in playlist:
             e.play(display)
@@ -216,13 +270,5 @@ while True:
 
         utime.sleep(1)
 
-    display.set_pen(255,0,0)
-    display.clear()
-    display.set_pen(0,0,0)
-    display.text("LOST", 5,20, 200,5)
-    display.text("Press Button 'Y' to start", 5,140,200,4)
-    display.update()
-    while not display.is_pressed(display.BUTTON_Y):
-        utime.sleep(.1)
-    display.set_pen(0,0,0)
-    display.clear()
+    loose(5)
+    start_screen()
