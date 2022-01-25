@@ -1,5 +1,5 @@
 import picoexplorer as display # type: ignore
-import utime
+import utime # type: ignore
 import random
 import math
 
