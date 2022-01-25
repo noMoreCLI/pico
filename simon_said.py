@@ -156,7 +156,7 @@ def start_screen() -> None:
 
 
 #
-# Initialization
+# Initialization for easy changes
 #
 btn_a = (60,70)
 btn_b = (60,190)
@@ -221,52 +221,53 @@ while True:
         # players turn
 
         display.update()
-        keys = 0
-        play = True
+        inplay = player_turn(playlist, round)
+#        keys = 0
+#        play = True
 
-        while play:
-
-            if display.is_pressed(display.BUTTON_A):
-                print("Button A")
-                if playlist[keys] == sensoA:
-                    sensoA.play(display, 0.5)
-                    keys = keys + 1
-                else:
-                    print("Lost")
-                    inplay = False
-                    play = False
-            if display.is_pressed(display.BUTTON_B):
-                print("Button B")
-                if playlist[keys] == sensoB:
-                    sensoB.play(display, 0.5)
-                    keys = keys + 1
-                else:
-                    print("Lost")
-                    inplay = False
-                    play = False
-            if display.is_pressed(display.BUTTON_X):
-                print("Button X")
-                if playlist[keys] == sensoX:
-                    sensoX.play(display, 0.5)
-                    keys = keys + 1
-                else:
-                    print("Lost")
-                    inplay = False
-                    play = False
-            if display.is_pressed(display.BUTTON_Y):
-                print("Button Y")
-                if playlist[keys] == sensoY:
-                    sensoY.play(display, 0.5)
-                    keys = keys + 1
-                else:
-                    print("Lost")
-                    inplay = False
-                    play = False
-            utime.sleep(.05)
-            if keys == round:
-                play = False
-                round = round + 1
-                print("Starting next round")
+#        while play:
+#
+#            if display.is_pressed(display.BUTTON_A):
+#                print("Button A")
+#                if playlist[keys] == sensoA:
+#                    sensoA.play(display, 0.5)
+#                    keys = keys + 1
+#                else:
+#                    print("Lost")
+#                    inplay = False
+#                    play = False
+#            if display.is_pressed(display.BUTTON_B):
+#                print("Button B")
+#                if playlist[keys] == sensoB:
+#                    sensoB.play(display, 0.5)
+#                    keys = keys + 1
+#                else:
+#                    print("Lost")
+#                    inplay = False
+#                    play = False
+#            if display.is_pressed(display.BUTTON_X):
+#                print("Button X")
+#                if playlist[keys] == sensoX:
+#                    sensoX.play(display, 0.5)
+#                    keys = keys + 1
+#                else:
+#                    print("Lost")
+#                    inplay = False
+#                    play = False
+#            if display.is_pressed(display.BUTTON_Y):
+#                print("Button Y")
+#                if playlist[keys] == sensoY:
+#                    sensoY.play(display, 0.5)
+#                    keys = keys + 1
+#                else:
+#                    print("Lost")
+#                    inplay = False
+#                    play = False
+ #           utime.sleep(.05)
+ #           if keys == round:
+ #               play = False
+ #               round = round + 1
+ #               print("Starting next round")
 
         utime.sleep(1)
 
