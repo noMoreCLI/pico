@@ -1,4 +1,3 @@
-from _typeshed import SupportsItemAccess
 import picoexplorer as display # type: ignore
 import utime # type: ignore
 import random
@@ -131,7 +130,6 @@ def player_turn(playlist, round: int):
         # check if we we have pressed all keys in this round
         if turn == round:
             play = False
-            round = round + 1
             print("Starting next round")
     return success
 
@@ -141,6 +139,11 @@ def loose(duration: int = 3):
     display.set_pen(0,0,0)
     display.text("LOST", 5,20, 200,5)
     display.update()
+    for i in range(0,3):
+        display.set_tone(200)
+        utime.sleep(0.2)
+        display.set_tone(-1)
+        utime.sleep(0.2)
     utime.sleep(duration)
 
 
@@ -222,6 +225,8 @@ while True:
 
         display.update()
         inplay = player_turn(playlist, round)
+        if inplay:
+            round = round + 1
 #        keys = 0
 #        play = True
 
